@@ -20,6 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username_err = "Please enter a username.";
     } else {
         $username = trim($_POST['username']);
+
+        // Check for duplicate username
+        $sql = "SELECT id FROM users WHERE username = :username";
+        if ($stmt = $pdo->prepare($sql)) {
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                $username_err = "This username is already taken.";
+            }
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
     }
 
     // Validate password
@@ -104,7 +116,7 @@ $users = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         <input type="hidden" id="update_id" name="update_id">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control <?= !empty($username_err) ? 'is-invalid' : '' ?>" id="username" name="username" value="<?= htmlspecialchars($username) ?>">
+            <input type="text" class="form-control <?= !empty($username_err) ? 'is-invalid' : '' ?>" id="username" name="username">
             <span class="invalid-feedback"><?= $username_err ?></span>
         </div>
         <div class="form-group">

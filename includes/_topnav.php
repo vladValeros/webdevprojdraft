@@ -39,7 +39,7 @@ $username = isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['u
                     <span><?= $username; ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfileDropdown">
-                    <li><a class="dropdown-item" href="../admin/users.php">View User</a></li>
+                    <li><a class="dropdown-item" href="../admin/users.php">View Users</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="../account/logout.php">Logout</a></li>
                 </ul>
